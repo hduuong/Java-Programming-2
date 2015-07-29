@@ -1,0 +1,27 @@
+import java.util.*;
+import java.nio.file.*;
+import java.io.*;
+import java.awt.*;
+/**
+ * 
+ */ 
+public class FileReading {
+ 
+  public static void main(String[] args) {
+    
+    Scanner scan = new Scanner(System.in);
+    String fileName = scan.next();
+    File file = new File(fileName);
+    
+    Model matrix = new Model(file);
+    
+    
+    String start = "";
+    String end = "";
+    ArrayList<String> paths = new ArrayList<String>();
+    matrix.IslandHopping(matrix.copyMap(), start, end, paths);
+    
+    //print ignore duplicate or empty
+    
+  }
+}

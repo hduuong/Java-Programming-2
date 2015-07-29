@@ -1,0 +1,96 @@
+import javax.swing.*;
+import java.awt.*;
+
+
+/**
+ * a class the specify the characteristic of a dragon
+ * 
+ * @author Duong Chau
+ * @version Hw4
+ */ 
+
+public class Dragon {
+  private double x,y;       //represent end point
+  private double x0,y0;  //represent start point
+  private int iteration; //represent the interation
+  private Color color;     //represent the color
+  
+  public Dragon (double startx, double starty, int num
+               ,double endx, double endy, Color rgb){
+    if (num < 0 ) throw new IllegalArgumentException();
+    x0 = startx;
+    y0 = starty;
+    x = endx;
+    y = endy;
+    color = rgb;
+    iteration = num;
+  }
+  /**
+   * get the x-coordinate of the starting point
+   * @return the double type x-coordinate
+   */ 
+  public double getX() {
+    return x0;
+  }
+  /**
+   * get the y-coordinate of the starting point
+   * @return an double type y-coordinate
+   */ 
+  public double getY() {
+    return y0;
+  }
+  /**
+   * get the iteration
+   * @return an int type iteration number
+   */ 
+  public int getIterate() {
+    return iteration;
+  }
+  /**
+   * change the iteration
+   * @param ii an int type that specify the iteration level
+   */
+  public void changeIteration(int ii){
+    iteration = ii;
+  }
+  /**
+   * get the y-cooridinate of the end point
+   * @return return a double type y-coordinate
+   */ 
+  public double getEndY(){
+    return y;
+  }
+  /**
+   * get the x-cooridinate of the end point
+   * @return return a double type x-coordinate
+   */ 
+  public double getEndX(){
+    return x;
+  }
+  /**
+   * a  method that draw the dragon
+   * this make the sub classes have to override the method 
+   */ 
+  public void drawDragon(Graphics g, int itera
+                       , double x1, double y1
+                       , double x2, double y2
+                       , Direction direction){
+  g.setColor( color );
+    if (itera <= 0){
+      g.drawLine((int)x1,(int)y1,(int)x2,(int)y2);}
+    
+    else {
+      if (direction == Direction.NORTH) {
+        double peakX = x1 + (x2 - x1) * 0.5 - (y1 - y2) * 0.5;
+        double peakY = y1 - (x2 - x1) * 0.5 - (y1 - y2) * 0.5;
+        drawDragon(g, itera - 1, x1, y1, peakX, peakY, Direction.NORTH);
+        drawDragon(g, itera - 1, peakX, peakY, x2, y2, Direction.SOUTH);
+      } else{
+        double peakX = x2 + (x1 - x2) * 0.5 - (y2 - y1) * 0.5;
+        double peakY = y2 - (x1 - x2) * 0.5 - (y2 - y1) * 0.5;
+        drawDragon(g, itera - 1, x1, y1, peakX, peakY, Direction.NORTH);
+        drawDragon(g, itera - 1, peakX, peakY, x2, y2, Direction.SOUTH);
+      }
+    }
+  }
+}
